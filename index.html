@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine? ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Dancing Script', cursive;
+            background: url('heart-wallpaper.jpg') no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
+            overflow-x: hidden;
+            position: relative;
+            animation: fadeIn 2s ease-in;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .loading-screen {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 192, 203, 0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            z-index: 1000;
+            animation: fadeOut 1.5s forwards;
+        }
+        .floating-heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: red;
+            transform: rotate(-45deg);
+            animation: floatHearts 4s infinite;
+        }
+        @keyframes floatHearts {
+            0% { transform: translateY(0) rotate(-45deg); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(-45deg); opacity: 0; }
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            position: relative;
+        }
+        .love-letter {
+            display: none;
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            animation: fadeIn 1s;
+        }
+        .envelope {
+            cursor: pointer;
+            margin-top: 20px;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-screen" id="loadingScreen">
+        <p>Preparing something special for you, Aya... 💖</p>
+    </div>
+    <audio id="backgroundMusic" autoplay loop>
+        <source src="romantic_music.mp3" type="audio/mpeg">
+    </audio>
+    <div class="container" id="mainContent" style="display: none;">
+        <h1>Aya, Will You Be My Valentine? ❤️</h1>
+        <div class="button-container">
+            <button class="yes-btn" id="yesBtn">Yes! ❤️</button>
+            <button class="no-btn" id="noBtn">No 😢</button>
+        </div>
+        <div class="fireworks" id="fireworks">🎆💖🎆</div>
+        <div class="envelope" onclick="openLetter()">💌 Open Love Letter</div>
+        <div class="love-letter" id="loveLetter">
+            <p>كل لحظة وياك هي خطوة لشيء أكبر وأعمق، كأننا نقترب أكثر من شي ما كنت أتوقعه،
+            اللي بدأ فضول صار يقين، واللي كان همس صار سيمفونية مكتملة تنبض بالحياة بيننا،
+            مثل اسم "أيّة"، اللي يسكن قلبي من دون ما أشعر. 💖</p>
+        </div>
+    </div>
+    <script>
+        setTimeout(() => {
+            document.getElementById("loadingScreen").style.display = "none";
+            document.getElementById("mainContent").style.display = "block";
+        }, 1500);
+
+        function openLetter() {
+            document.getElementById("loveLetter").style.display = "block";
+        }
+
+        function createHeart() {
+            let heart = document.createElement("div");
+            heart.classList.add("floating-heart");
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 4000);
+        }
+        setInterval(createHeart, 500);
+
+        let noBtn = document.getElementById("noBtn");
+        let yesBtn = document.getElementById("yesBtn");
+        let noClickCount = 0;
+
+        noBtn.addEventListener("click", function() {
+            noClickCount++;
+            if (noClickCount < 6) {
+                noBtn.style.transform = `scale(${1 - noClickCount * 0.2})`;
+                noBtn.textContent = ["Are you sure? 😟", "Really sure? 🥺", "Think again! 🤔", "Don't do this! 😭", "Last chance! 💔"][noClickCount - 1];
+            } else {
+                noBtn.style.display = "none";
+            }
+            yesBtn.style.transform = `scale(${1 + noClickCount * 0.3})`;
+        });
+
+        yesBtn.addEventListener("click", function() {
+            let fireworks = document.createElement("div");
+            fireworks.classList.add("fireworks");
+            fireworks.innerHTML = "🎆💖🎆";
+            document.body.appendChild(fireworks);
+            setTimeout(() => { fireworks.remove(); }, 5000);
+            setTimeout(() => { window.location.href = "love_story.html"; }, 5000);
+        });
+    </script>
+</body>
+</html>
